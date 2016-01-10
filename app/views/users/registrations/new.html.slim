@@ -1,0 +1,31 @@
+legend
+  h2
+    | Sign up
+= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
+  = devise_error_messages!
+  .form-group
+    = f.label :email, class: "form-required"
+    = f.email_field :email, autofocus: true, class: "form-control"
+    / [data-toggle: "tooltip" data-placement: "right" title:"" data-original-title: "Tooltip on right"]
+  .form-group
+    = f.label :password, class: "form-required"
+    = f.password_field :password, autocomplete: "off", class: "form-control", data: { toggle: "tooltip", placement: "top", title: "", original_title: "Password must have at least 8 characters." }
+  .form-group
+    = f.label :password_confirmation, class: "form-required"
+    = f.password_field :password_confirmation, autocomplete: "off", class: "form-control"
+  .form-group
+    = f.label :fname, "First Name"
+    = f.email_field :fname, class: "form-control"
+  .form-group
+    = f.label :lname, "Last Name"
+    = f.email_field :lname, class: "form-control"
+  .form-group
+    label
+      span.form-required
+        | - Mandatory fields.
+  .actions.row
+    .col-xs-6.col-sm-6.col-md-6.col-lg-6
+      => f.submit "Sign up", class: "btn btn-success btn-block"
+    .col-xs-6.col-sm-6.col-md-6.col-lg-6
+      = link_to "Log In", new_user_session_path, class: "btn btn-primary btn-block"
+/ = render "users/shared/links"

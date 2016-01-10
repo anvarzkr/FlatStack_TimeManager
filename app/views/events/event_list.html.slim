@@ -1,0 +1,35 @@
+- model_class = Event
+/ .page-header
+/   h1
+/     = model_class.model_name.human.pluralize.titleize
+/     |  -
+/     =< @now.strftime('%B')
+/     =< @now.strftime('%Y')
+.page-body
+
+  / ul.pager
+  /   li.previous= link_to "&larr; Previous".html_safe, event_list_path(date: @now.prev_month)
+  /   li.date = "#{@now.strftime('%B')} #{@now.strftime('%Y')}"
+  /   li.next= link_to "Next &rarr;".html_safe, event_list_path(date: @now.next_month)
+  / .container-fluid
+  /   .row
+  /   - @events.group_by(&:start_at).each do |start_at, events|
+  /     .col-md-3.col-lg-3
+  /       .panel.panel-primary
+  /         .panel-heading
+  /           h3.panel-title
+  /             = start_at.day
+  /         .panel-body
+  /           ul.list-unstyled
+  /             - events.each do |event|
+  /               li
+  /                 - if event.user.id == current_user.id
+  /                   a[href="#{edit_event_path(event)}"]= event.title
+  /                 -else
+  /                   = event.title
+  .calendar-wrap
+    = month_calendar(events: @events, attribute: :start_at) do |date, events|
+      .calendar-day.text-right= date.day
+      ul.list-unstyled.events-day-list
+        - events.each do |event|
+          li= event.title
